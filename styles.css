@@ -70,11 +70,11 @@ button:hover{
     background-color: gray;
     color: gray;
     border: 1px solid black;
+    color: white;
 }
 
 body{
     background-color: lightcyan;
-    color: white;
 }
 
 .link:hover{

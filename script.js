@@ -47,10 +47,11 @@ async function hasCompletedTutorial() {
 
     // FIX: Safely handle missing profiles
     if (!data) {
-        console.log("No profile found. Assuming tutorial is not completed.");
+        console.warn("No profile found. Assuming tutorial is not completed.");
         return false;
     }
 
+    console.log('has completed tutorial');
     return data.tutorial_completed;
 }
 
