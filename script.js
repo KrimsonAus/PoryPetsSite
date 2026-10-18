@@ -33,6 +33,9 @@ hasCompletedTutorial()
 async function hasCompletedTutorial() {
     const {data: {user}, error: authError} = await supabaseClient.auth.getUser();
 
+    // Prevent crash if user is not logged in yet
+    if (!user) return false;
+
     let userId = user.id;
     const { data, error } = await supabaseClient
         .from('profiles')
@@ -45,13 +48,21 @@ async function hasCompletedTutorial() {
         return false;
     }
 
-    // FIX: Safely handle missing profiles
     if (!data) {
         console.warn("No profile found. Assuming tutorial is not completed.");
+        const tutorialPanel = document.getElementById('tutorial-panel');
+        tutorialPanel.style.visibility = 'visible';
         return false;
     }
 
-    console.log('has completed tutorial');
+    // Evaluate the actual database boolean before logging
+    if (data.tutorial_completed) {
+        console.log('Player has completed the tutorial.');
+    } else {
+        console.log('Player profile found, but tutorial is NOT completed.');
+    }
+
+    completedTutorial = data.tutorial_completed;
     return data.tutorial_completed;
 }
 
