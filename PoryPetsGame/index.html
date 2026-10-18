@@ -27,9 +27,10 @@
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
-        dataUrl: "Build/PoryPetsGame.data",
-        frameworkUrl: "Build/PoryPetsGame.framework.js",
-        codeUrl: "Build/PoryPetsGame.wasm",
+        // ADD .br TO THESE THREE LINES
+        dataUrl: "Build/PoryPetsGame.data.br",
+        frameworkUrl: "Build/PoryPetsGame.framework.js.br",
+        codeUrl: "Build/PoryPetsGame.wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Krimson Games",
         productName: "PoryPets",
