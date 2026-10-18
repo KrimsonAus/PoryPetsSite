@@ -60,6 +60,8 @@ async function hasCompletedTutorial() {
         console.log('Player has completed the tutorial.');
     } else {
         console.log('Player profile found, but tutorial is NOT completed.');
+        const tutorialPanel = document.getElementById('tutorial-panel');
+        tutorialPanel.style.visibility = 'visible';
     }
 
     completedTutorial = data.tutorial_completed;
