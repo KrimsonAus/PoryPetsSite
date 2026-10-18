@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pory Pets</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Import the Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="header">
+    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>
+    <div class="rightPos">
+        <p id="goldAmount">Gold: </p>
+        <p>Pen</p>
+        <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>
+        <p class="link" onclick="window.location.replace('./account.html')">Account</p>
+    </div>
+</header>
+
+<main class="center-text flexMain">
+
+    <div style="visibility: hidden;" class="tutorialPanel" id="tutorial-panel">
+        <h1>Welcome New User!</h1>
+        <p>Currently, you have no <span style="color: blue">pets</span>...</p>
+        <p><span style="color: blue">Pets</span> cost <span style="color: gold">gold</span>, ill give you some so you can buy your first one.</p>
+        <p>Go to the <span style="color: firebrick">Shop</span> page then select <span style="color: blue">Pets</span> and buy your first one.</p>
+        <button onclick="CloseTutorialPanel()">Ok</button>
+    </div>
+
+
+
+    <div class="loginPanel" id="login-panel">
+        <h1>Sign In to Continue.</h1>
+        <br>
+        <label>
+            email:
+            <br>
+            <input type="email" id="email-input">
+        </label>
+        <br>
+        <label>
+            password:
+            <br>
+            <input type="password" id="password-input">
+        </label>
+        <br>
+        <button id="login-btn">Sign In</button>
+
+        <br>
+        <br>
+        or
+        <br>
+        <br>
+        <button onclick="SignUpMenu()">Create new account</button>
+        <br>
+    </div>
+
+        <div style="visibility: hidden" class="signupPanel" id="signup-panel">
+            <h1>Sign Up.</h1>
+            <br>
+
+            <label>
+                username:
+                <br>
+                <input type="text" id="signup-username-input">
+            </label>
+            <label>
+                email:
+                <br>
+                <input type="email" id="signup-email-input">
+            </label>
+            <label>
+                password:
+                <br>
+                <input type="password" id="signup-password-input">
+            </label>
+            <br>
+
+            <button onclick="SignUp()" id="signup-btn">Create new account</button>
+            <br>
+
+            <p class="emailLogged" id="signup-status-message"></p>
+        </div>
+
+    <p class="emailLogged" id="status-message"></p>
+
+
+    <iframe src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970" height="610"></iframe>
+
+</main>
+<footer></footer>
+<script src="script.js"></script>
+</body>
+</html>

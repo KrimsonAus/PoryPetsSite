@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Import the Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+  <header class="header">
+    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>
+
+    <div class="rightPos">
+      <p id="goldAmount">Gold: </p>
+      <p>Pen</p>
+      <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>
+      <p>Account</p>
+    </div>
+  </header>
+    <main class="center-text">
+      <h1 style="text-decoration: underline">Account</h1>
+      <p>username: </p><p id="username"></p>
+      <h2 id="displayName">Loading Account...</h2>
+      <label>
+        Display Name:
+        <br>
+        <input type="text" id="username-input">
+      </label>
+      <br>
+      <button onclick="SetDisplayName()">Set Display Name</button>
+      <br>
+      <br>
+      <!-- PFP, idk, shrug -->
+      <button onclick="LogOut()" style="visibility: hidden" id="logoutButton">Log Out</button>
+      <br>
+      <button onclick="LogOutGlobal()" style="visibility: hidden" id="logoutButtonG">Log Out of all devices</button>
+      <div style="visibility: hidden" id="login-panel"></div>
+      <p style="visibility: hidden" id="status-message"></p>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="script.js"></script>
+
+</html>
+
+
+
+<!--<div class="relative">-->
+<!--  <img src="noit.jpg">-->
+<!--  <div class="bottom-center">Item 1</div>-->
+<!--</div>-->
