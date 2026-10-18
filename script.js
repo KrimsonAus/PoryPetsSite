@@ -30,7 +30,10 @@ let completedTutorial;
 
 hasCompletedTutorial()
 
-async function hasCompletedTutorial(userId) {
+async function hasCompletedTutorial() {
+    const {data: {user}, error: authError} = await supabaseClient.auth.getUser();
+
+    let userId = user.id;
     const { data, error } = await supabaseClient
         .from('profiles')
         .select('tutorial_completed')
