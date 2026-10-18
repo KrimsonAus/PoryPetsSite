@@ -30,31 +30,25 @@ let completedTutorial;
 
 hasCompletedTutorial()
 
-async function hasCompletedTutorial() {
-    const {data: {user}, error: authError} = await supabaseClient.auth.getUser();
-
-    if (user == null || authError) {
-        //window.location.replace('./index.html');
-        return;
-    }
-
-    const {data, error} = await supabaseClient
+async function hasCompletedTutorial(userId) {
+    const { data, error } = await supabaseClient
         .from('profiles')
         .select('tutorial_completed')
-        .eq('id', user.id)
+        .eq('id', userId)
         .maybeSingle();
 
     if (error) {
-        console.error("Error fetching profile:", error.message);
-        return;
+        console.error("Database error:", error);
+        return false;
     }
 
-    completedTutorial = data.tutorial_completed;
-
-    if (!completedTutorial) {
-        const tutorialPanel = document.getElementById('tutorial-panel');
-        tutorialPanel.style.visibility = 'visible';
+    // FIX: Safely handle missing profiles
+    if (!data) {
+        console.log("No profile found. Assuming tutorial is not completed.");
+        return false;
     }
+
+    return data.tutorial_completed;
 }
 
 // Add click event to the login button
