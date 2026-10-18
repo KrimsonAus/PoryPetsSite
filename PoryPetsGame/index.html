@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | PoryPets</title>
-</head>
-<body style="text-align: center; padding: 0; border: 0; margin: 0;">
-<canvas id="unity-canvas" width=960 height=600 tabindex="-1"
-        style="width: 960px; height: 600px; background: #231F20"></canvas>
-<script src="Build/PoryPetsGame.loader.js"></script>
-<script>
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  </head>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
+    <script src="Build/PoryPetsGame.loader.js"></script>
+    <script>
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -24,25 +23,26 @@
 
         document.body.style.textAlign = "left";
 
-    }
+      }
 
-    createUnityInstance(document.querySelector("#unity-canvas"), {
+      createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
-        // Update these three lines to use the .unityweb extension
-        dataUrl: "Build/PoryPetsGame.data.unityweb",
-        frameworkUrl: "Build/PoryPetsGame.framework.js.unityweb",
-        codeUrl: "Build/PoryPetsGame.wasm.unityweb",
+        dataUrl: "Build/PoryPetsGame.data",
+        frameworkUrl: "Build/PoryPetsGame.framework.js",
+        codeUrl: "Build/PoryPetsGame.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Krimson Games",
         productName: "PoryPets",
         productVersion: "1.0",
-    }).then((unityInstance) => {
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      }).then((unityInstance) => {
         window.myUnityInstance = unityInstance;
         //alert("set unity instance");
         window.parent.postMessage("loginready", "*");
-    }).catch((message) => {
+      }).catch((message) => {
         alert(message);
-    });
-</script>
-</body>
+      });
+    </script>
+  </body>
 </html>
