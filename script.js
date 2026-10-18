@@ -42,7 +42,7 @@ async function hasCompletedTutorial() {
         .from('profiles')
         .select('tutorial_completed')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
     if (error) {
         console.error("Error fetching profile:", error.message);
@@ -500,7 +500,7 @@ async function loadDisplayName() {
         .from('profiles')
         .select('display_name')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
     if (error) {
         console.error("Error fetching profile:", error.message);
