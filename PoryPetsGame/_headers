@@ -1,11 +1,11 @@
-/PoryPetsGame/Build/*.wasm.br
+/Build/*.wasm.unityweb
   Content-Encoding: br
   Content-Type: application/wasm
 
-/PoryPetsGame/Build/*.js.br
+/Build/*.framework.js.unityweb
   Content-Encoding: br
   Content-Type: application/javascript
 
-/PoryPetsGame/Build/*.data.br
+/Build/*.data.unityweb
   Content-Encoding: br
   Content-Type: application/octet-stream
