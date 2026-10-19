@@ -8,15 +8,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<header class="header">
-    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>
-    <div class="rightPos">
-        <p id="goldAmount">Gold: </p>
-        <p>Pen</p>
-        <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>
-        <p class="link" onclick="window.location.replace('./account.html')">Account</p>
-    </div>
-</header>
+<iframe id="top-panel" frameborder="none" src="header.html"  width="100%" height="auto"></iframe>
+<!--<header class="header">-->
+<!--    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>-->
+<!--    <div class="rightPos">-->
+<!--        <p id="goldAmount">Gold: </p>-->
+<!--        <p>Pet Pen</p>-->
+<!--        <p>Inventory</p>-->
+<!--        <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>-->
+<!--        <p class="link" onclick="window.location.replace('./account.html')">Account</p>-->
+<!--    </div>-->
+<!--</header>-->
 
 <main class="center-text flexMain">
 
@@ -86,7 +88,7 @@
     <p class="emailLogged" id="status-message"></p>
 
 
-    <iframe src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970" height="610"></iframe>
+    <iframe frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970" height="610"></iframe>
 
 </main>
 <footer></footer>

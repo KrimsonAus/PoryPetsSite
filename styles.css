@@ -62,14 +62,25 @@
 }
 
 button {
+
+    padding: 15px;
+
     width: 150px;
-    height: 40px;
+    height: 100%;
     flex-shrink: 0;
+
+    background-color: transparent;
+    border: none;
+    background-image: url("graphics/ButtonNotPushed.png");
+    background-size: 100% 100%;
+
+    font-size: 100%;
+
 }
 button:hover{
-    background-color: gray;
+    background-image: url("graphics/Button.png");
     color: gray;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     color: white;
 }
 
@@ -152,12 +163,12 @@ body{
     text-align: center;
 }
 
-.shopButtons{
-    width: 100px;
-    height: 50px;
-    font-size: 20px;
-    background-color: lightseagreen;
-}
+/*.shopButtons{*/
+/*    width: 100px;*/
+/*    height: 50px;*/
+/*    font-size: 20px;*/
+/*    background-color: lightseagreen;*/
+/*}*/
 
 .signupPanel {
     position: absolute;
@@ -218,12 +229,12 @@ body{
     font-weight: bold;
 }
 
-.tutorialPanel button{
-    min-height: 40px;
-    min-width: 130px;
-    font-size: 30px;
-    border: 5px black solid;
-}
+/*.tutorialPanel button{*/
+/*    min-height: 40px;*/
+/*    min-width: 130px;*/
+/*    font-size: 30px;*/
+/*    border: 5px black solid;*/
+/*}*/
 
 .buyPetMenu{
     position: absolute;
@@ -242,6 +253,51 @@ body{
     font: normal 20px "Monospaced";
 
     background-color: lightsalmon;
+    /*background-image: url("./paper.jpg");*/
+    /*background-blend-mode: multiply;*/
+
+    width: 100%;
+    max-width: 500px;
+
+    min-height: 320px;
+    padding: 25px;
+    box-sizing: border-box;
+
+    font-weight: bold;
+}
+
+@keyframes showPanel {
+    0% {
+        transform: scale(0); /* Original size */
+    }
+    25% {
+        transform: scale(1); /* Grown by 20% */
+    }
+    75%{
+        transform: scale(1); /* Grown by 20% */
+    }
+    100% {
+        transform: scale(0); /* Return to original size */
+    }
+}
+
+.purchaseSuccessPanel{
+    position: absolute;
+
+    /*border: 10px solid gold;*/
+
+    top: 170px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    text-align: center;
+    font: normal 20px "Monospaced";
+
+    background-color: yellow;
     /*background-image: url("./paper.jpg");*/
     /*background-blend-mode: multiply;*/
 

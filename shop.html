@@ -8,18 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<header class="header">
-    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>
+<iframe id="top-panel" frameborder="none" src="header.html"  width="100%" height="auto"></iframe>
 
-    <div class="rightPos">
-        <p id="goldAmount">Gold: </p>
-        <p>Pen</p>
-        <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>
-        <p>Account</p>
-    </div>
-</header>
 <main class="center-text">
 
+    <div style="display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;">
+        <div style="visibility: hidden; z-index: 99;" class="purchaseSuccessPanel" id="purchase-success-panel">
+            <img src="PC.gif" alt="">
+            <h1>Purchase Success!</h1>
+        </div>
+    </div>
+    
   <div style="display: flex;
     flex-direction: column;
     justify-content: center;

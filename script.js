@@ -11,6 +11,7 @@ const statusMessage = document.getElementById('status-message');
 
 const loginPanel = document.getElementById('login-panel');
 
+const topPanel = document.getElementById('top-panel');
 const spriteUrl = "https://rzoqmijpowzdpkjnrtgq.supabase.co/storage/v1/object/public/";
 
 let shopItemType = 0; //toys, food, pets
@@ -22,11 +23,6 @@ let loggedInSession;
 
 let completedTutorial;
 
-//TODO [petname] in buy pet dialogue
-//TODO ground collider absorbs clicks?
-//TODO purchase conformation
-//TODO copy header
-//
 
 hasCompletedTutorial()
 
@@ -48,9 +44,11 @@ async function hasCompletedTutorial() {
         return false;
     }
 
+    const tutorialPanel = document.getElementById('tutorial-panel');
+
     if (!data) {
         console.warn("No profile found. Assuming tutorial is not completed.");
-        const tutorialPanel = document.getElementById('tutorial-panel');
+        if(tutorialPanel==null){return false}
         tutorialPanel.style.visibility = 'visible';
         return false;
     }
@@ -60,8 +58,9 @@ async function hasCompletedTutorial() {
         console.log('Player has completed the tutorial.');
     } else {
         console.log('Player profile found, but tutorial is NOT completed.');
-        const tutorialPanel = document.getElementById('tutorial-panel');
-        tutorialPanel.style.visibility = 'visible';
+        if(tutorialPanel!=null){
+            tutorialPanel.style.visibility = 'visible';
+        }
     }
 
     completedTutorial = data.tutorial_completed;
@@ -112,7 +111,7 @@ if (loginBtn != null) {
             // Note: Ensure 'unityInstance' matches whatever variable name your WebGL template uses
             // 'DatabaseManager' is the name of the GameObject in your Unity scene
             // 'ReceiveWebSession' is the C# method we are about to create
-            const gameIframe = document.querySelector('iframe');
+            const gameIframe = document.getElementById('game');
 
 // 2. Check if the iframe exists and if Unity is ready inside it
             if (gameIframe && gameIframe.contentWindow.myUnityInstance) {
@@ -121,7 +120,7 @@ if (loginBtn != null) {
                 gameIframe.contentWindow.myUnityInstance.SendMessage('DatabaseManager', 'ReceiveWebSession', JSON.stringify(sessionData));
 
             } else {
-                console.warn("Unity is not loaded inside the iframe yet!");
+                console.error("Unity is not loaded inside the iframe yet!");
                 statusMessage.textContent = "Logged in! Waiting for the game to finish loading...";
             }
             await UpdateGoldText();
@@ -131,12 +130,30 @@ if (loginBtn != null) {
 }
 
 async function UpdateGoldText() {
-    const goldText = document.getElementById('goldAmount');
+    console.warn("updating gold text")
+
+    let goldText = topPanel.contentWindow.document.getElementById('goldAmount');
+    if(!goldText){
+        console.warn("gold text fail")
+        await waitForIframe(topPanel);
+        goldText = topPanel.contentWindow.document.getElementById('goldAmount');
+    }
     let gold = 0;
     gold = await fetchPlayerGold();
 
     goldText.textContent = `Gold: ${gold}`
+
+    console.warn("YES updated gold text")
 }
+
+function waitForIframe(iframe) {
+    return new Promise((resolve) => {
+        iframe.addEventListener('load', () => {
+            resolve();
+        }, { once: true });
+    });
+}
+
 
 async function fetchPlayerGold() {
     // 1. Get the current logged-in user
@@ -252,6 +269,7 @@ async function loadShopGrid() {
         // load from supabase bucket
         var sprite = null;
         if (category != null) {
+
             sprite = `${spriteUrl}item_sprites/${category}/${item.name.toLowerCase()}.png`;
 
             itemCard.onclick = async () => {
@@ -314,7 +332,9 @@ async function BuyItem(itemId) {
     // Optional: Refresh the player's gold display if the purchase succeeded
     if (success) {
         console.log("Purchase successful!");
-        await UpdateGoldText();
+
+        ShowPC();
+
     } else {
         console.log("Purchase failed: Not enough gold.");
     }
@@ -392,7 +412,7 @@ async function BuyPet(petId, petName) { // <- Add petName parameter
 
     if (success) {
         console.log("Purchase successful!");
-
+        ShowPC();
         const buyPetMenu = document.getElementById('buy-pet-menu')
         buyPetMenu.style.visibility = 'hidden';
         await UpdateGoldText();
@@ -433,7 +453,7 @@ async function checkExistingLogin() {
             refreshToken: session.refresh_token
         };
 
-        const gameIframe = document.querySelector('iframe');
+        const gameIframe = document.getElementById('game');
 
         if (gameIframe && gameIframe.contentWindow.myUnityInstance) {
             gameIframe.contentWindow.myUnityInstance.SendMessage('DatabaseManager', 'ReceiveWebSession', JSON.stringify(sessionData));
@@ -566,6 +586,12 @@ async function SignUp() {
         return; // Stop execution
     }
 
+    if(username==null||username===""){
+        statusMessage.style.color = "red";
+        statusMessage.textContent = "Must fill in username field.";
+        return; // Stop execution
+    }
+
     if (!isAvailable) {
         statusMessage.style.color = "red";
         statusMessage.textContent = "That username is already taken.";
@@ -575,7 +601,7 @@ async function SignUp() {
     statusMessage.textContent = "Creating account...";
     statusMessage.style.color = "black";
 
-    alert("trying to signup with username " + username + " and display_name " + username);
+    //alert("trying to signup with username " + username + " and display_name " + username);
 
     // 2. Proceed with sign up since the name is free
     const {data, error} = await supabaseClient.auth.signUp({
@@ -592,7 +618,12 @@ async function SignUp() {
     if (error) {
         console.error('Error signing up:', error.message);
         statusMessage.style.color = "red";
-        statusMessage.textContent = error.message;
+        if(error.message === "User already registered"){
+            statusMessage.textContent = 'Email already used.';
+        }
+        else{
+            statusMessage.textContent = error.message;
+        }
     } else {
         console.log('User created successfully:', data.user);
         statusMessage.style.color = "green";
@@ -695,9 +726,24 @@ async function CloseTutorialPanel() {
 
     if (error) {
         console.error("Failed to complete tutorial:", error.message);
+        alert("Failed to give gold.")
         // If they already claimed it, error.message will say "Tutorial already completed."
         return;
     }
 
     UpdateGoldText();
+}
+
+
+
+async function ShowPC(){
+    const pc = document.getElementById('purchase-success-panel')
+    pc.style.visibility = 'visible';
+    pc.style.animation = 'showPanel 3s linear';
+    await UpdateGoldText();
+
+    setTimeout(() => {
+        pc.style.visibility = 'hidden';
+        pc.style.animation = 'null';
+    }, 2850);
 }
