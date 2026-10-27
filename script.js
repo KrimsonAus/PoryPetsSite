@@ -450,7 +450,8 @@ async function checkExistingLogin() {
         // Package the existing tokens for Unity
         const sessionData = {
             accessToken: session.access_token,
-            refreshToken: session.refresh_token
+            refreshToken: session.refresh_token,
+            playerId: session.user.id,
         };
 
         const gameIframe = document.getElementById('game');
