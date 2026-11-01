@@ -8,47 +8,48 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<iframe id="top-panel" frameborder="none" src="header.html"  width="100%" height="auto"></iframe>
+<iframe id="top-panel" frameborder="none" src="header.html" width="100%" height="auto"></iframe>
 
 <main class="center-text ">
 
-    <div style="visibility: hidden;" class="tutorialPanel" id="tutorial-panel">
-        <h1>Welcome New User!</h1>
-        <p>Currently, you have no <span style="color: blue">pets</span>...</p>
-        <p><span style="color: blue">Pets</span> cost <span style="color: gold">gold</span>, ill give you some so you can buy your first one.</p>
-        <p>Go to the <span style="color: firebrick">Shop</span> page then select <span style="color: blue">Pets</span> and buy your first one.</p>
-        <button onclick="CloseTutorialPanel()">Ok</button>
-    </div>
+    <div class="flexMain">
+        <div style="visibility: hidden;" class="tutorialPanel" id="tutorial-panel">
+            <h1>Welcome New User!</h1>
+            <p>Currently, you have no <span style="color: blue">pets</span>...</p>
+            <p><span style="color: blue">Pets</span> cost <span style="color: gold">gold</span>, ill give you some so
+                you can buy your first one.</p>
+            <p>Go to the <span style="color: firebrick">Shop</span> page then select <span
+                    style="color: blue">Pets</span> and buy your first one.</p>
+            <button onclick="CloseTutorialPanel()">Ok</button>
+        </div>
 
-
-
-    <div class="loginPanel" id="login-panel">
-        <h1>Sign In to Continue.</h1>
-        <br>
-        <label>
-            email:
+        <div class="loginPanel panel" id="login-panel">
+            <h1>Sign In to Continue.</h1>
             <br>
-            <input type="email" id="email-input">
-        </label>
-        <br>
-        <label>
-            password:
+            <label>
+                email:
+                <br>
+                <input type="email" id="email-input">
+            </label>
             <br>
-            <input type="password" id="password-input">
-        </label>
-        <br>
-        <button id="login-btn">Sign In</button>
+            <label>
+                password:
+                <br>
+                <input type="password" id="password-input">
+            </label>
+            <br>
+            <button id="login-btn">Sign In</button>
 
-        <br>
-        <br>
-        or
-        <br>
-        <br>
-        <button onclick="SignUpMenu()">Create new account</button>
-        <br>
-    </div>
+            <br>
+            <br>
+            or
+            <br>
+            <br>
+            <button onclick="SignUpMenu()">Create new account</button>
+            <br>
+        </div>
 
-        <div style="visibility: hidden" class="signupPanel" id="signup-panel">
+        <div style="visibility: hidden" class="signupPanel panel" id="signup-panel">
             <h1>Sign Up.</h1>
             <br>
 
@@ -75,11 +76,14 @@
             <p class="emailLogged" id="signup-status-message"></p>
         </div>
 
-    <p class="emailLogged" id="status-message"></p>
+        <p class="emailLogged" id="status-message"></p>
 
+        <iframe class="game" frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970"
+                height="610"></iframe>
+    </div>
     <div class="sidePanel left">
         <h1>Management</h1>
-        <button onclick="window.parent.location.replace('./shop.html')" >Shop</button>
+        <button onclick="window.parent.location.replace('./shop.html')">Shop</button>
         <button>Bank</button>
         <button>Pet Pen</button>
         <button onclick="window.parent.location.replace('./inventory.html')">Inventory</button>
@@ -87,7 +91,7 @@
     <div class="sidePanel right">
         <h1>Side panel Right</h1>
     </div>
-    <iframe frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970" height="610"></iframe>
+
 
 </main>
 <footer></footer>

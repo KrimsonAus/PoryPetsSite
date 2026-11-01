@@ -31,13 +31,40 @@
 .flexMain{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
     min-height: 100vh;
 }
 
 .loginPanel {
     border: 4px solid black;
+
+
+    max-width: 380px;
+
+
+    min-height: 320px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+.signupPanel {
+
+    border: 4px solid black;
+
+    top: 100px;
+
+    max-width: 500px;
+
+
+    min-height: 320px;
+    padding: 25px;
+    box-sizing: border-box;
+    /*transform: translate(140%, 0%);*/
+}
+
+.panel{
+
+    position: absolute;
 
     display: flex;
     flex-direction: column;
@@ -53,12 +80,6 @@
     background-blend-mode: multiply;
 
     width: 100%;
-    max-width: 380px;
-
-
-    min-height: 320px;
-    padding: 25px;
-    box-sizing: border-box;
 }
 
 button {
@@ -71,14 +92,14 @@ button {
 
     background-color: transparent;
     border: none;
-    background-image: url("graphics/ButtonNotPushed.png");
+    background-image: url("graphics/ButtonNotPushed.webp");
     background-size: 100% 100%;
 
     font-size: 100%;
 
 }
 button:hover{
-    background-image: url("graphics/Button.png");
+    background-image: url("graphics/Button.webp");
     color: gray;
     /*border: 1px solid black;*/
     color: white;
@@ -170,34 +191,7 @@ body{
 /*    background-color: lightseagreen;*/
 /*}*/
 
-.signupPanel {
-    position: absolute;
 
-    border: 4px solid black;
-
-    top: 100px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-
-    text-align: center;
-    font: normal 20px "Monospaced";
-
-    background-color: lightgoldenrodyellow;
-    background-image: url("./paper.jpg");
-    background-blend-mode: multiply;
-
-    width: 100%;
-    max-width: 500px;
-
-
-    min-height: 320px;
-    padding: 25px;
-    box-sizing: border-box;
-}
 
 .tutorialPanel{
     position: absolute;
@@ -317,21 +311,29 @@ body{
 
     position: absolute;
     /* 225x425 */
-    width: 300px;
-    height: 500px;
 
-    top: 25%;
+    width: 15vw;
+    height: 25vw;
+    /*width: 300px;*/
+    /*height: 500px;*/
+
+    top: 15%;
     transform: translate(0%, 0%);
 
     text-decoration: underline;
+
+    font-size: 0.75vw;
 }
 
 .sidePanel button{
-    max-height: 70px;
-    width: 200px;
-    font-size: 25px;
-    margin-bottom: 20px;
-    margin-top: 5px;
+
+    /* 15 = 300px */
+    /* vw: target/20  */
+    height: 3.75vw;
+    width: 10vw;
+    font-size: 1.25vw;
+    margin-bottom: 0.5vw;
+    margin-top: 0.5vw;
 }
 
 .left{
@@ -339,7 +341,7 @@ body{
 }
 
 .right{
-    left: 80%;
+   right:5%;
 }
 
 .inventoryItems{
@@ -363,4 +365,8 @@ body{
     text-align: center;
 
     width: 150px;
+}
+
+.game{
+    /*left:50%;*/
 }
