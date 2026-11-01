@@ -862,4 +862,83 @@ function isValidHttpUrl(string) {
     return url.protocol === "http:" || url.protocol === "https:";
 }
 
+async function loadPetPenGrid() {
+    console.log('load petpen grid');
+
+    if (!canClick) {
+        // return;
+    }
+    canClick = false;
+    const {data: {user}} = await supabaseClient.auth.getUser();
+    console.log("Current Auth UID:", user?.id);
+    try {
+        const petPenContainer = document.querySelector('.petPenItems');
+        const shopLoad = document.getElementById('shopLoad');
+
+        if (!petPenContainer) {
+            console.error("inventoryItems container not found.");
+            return;
+        }
+
+        petPenContainer.innerHTML = '';
+
+        // Null check added here to prevent TypeError crashes
+        if (shopLoad) {
+            shopLoad.style.display = 'block';
+        }
+
+        let isle = 'player_pets_pen';
+
+        // 1. Start the base query
+        let query = supabaseClient
+            .from(isle)
+            .select('*');
+
+        // 3. Execute the final query
+        const {data: items, error} = await query;
+
+        console.log("Error:", error);
+        console.log("Fetched items:", items);
+
+        if (error) {
+            console.error("Failed to load shop items:", error);
+            return;
+        }
+
+        if (shopLoad) {
+            shopLoad.style.display = 'none';
+        }
+
+        // Loop through the actual database items
+        for (const item of items) {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'relative shopItem';
+
+            var sprite = null;
+
+            var itm = await getItemFromId(item.item_id);
+            var category = itm.category;
+            console.log("cat is " + category)
+            console.log(itm.name)
+            let nme = itm.name.toLowerCase();
+            let url = `${spriteUrl}pet_sprites/${nme}.png`;
+
+            sprite = url;
+
+            itemCard.innerHTML = `
+                <img onclick="window.parent.location.replace('./shop.html')" src='${sprite}' alt="${item.name}" onerror="this.src='noit.jpg'">
+                <div class="bottom-center">${itm.name + " [x" + item.quantity + "]"}</div>
+            `;
+
+            petPenContainer.appendChild(itemCard);
+        }
+
+    } catch (err) {
+        // This will print the exact line and reason the script is crashing
+        console.error("Critical error in loadInventoryGrid:", err);
+    } finally {
+        canClick = true;
+    }
+}
+
 //THANKS TO BRYCE FOR PLAYTESTING
