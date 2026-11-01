@@ -9,18 +9,8 @@
 </head>
 <body>
 <iframe id="top-panel" frameborder="none" src="header.html"  width="100%" height="auto"></iframe>
-<!--<header class="header">-->
-<!--    <h1 class="link" onclick="window.location.replace('./index.html')">Pory Pets</h1>-->
-<!--    <div class="rightPos">-->
-<!--        <p id="goldAmount">Gold: </p>-->
-<!--        <p>Pet Pen</p>-->
-<!--        <p>Inventory</p>-->
-<!--        <p class="link" onclick="window.location.replace('./shop.html')">Shop</p>-->
-<!--        <p class="link" onclick="window.location.replace('./account.html')">Account</p>-->
-<!--    </div>-->
-<!--</header>-->
 
-<main class="center-text flexMain">
+<main class="center-text ">
 
     <div style="visibility: hidden;" class="tutorialPanel" id="tutorial-panel">
         <h1>Welcome New User!</h1>
@@ -87,7 +77,16 @@
 
     <p class="emailLogged" id="status-message"></p>
 
-
+    <div class="sidePanel left">
+        <h1>Management</h1>
+        <button onclick="window.parent.location.replace('./shop.html')" >Shop</button>
+        <button>Bank</button>
+        <button>Pet Pen</button>
+        <button onclick="window.parent.location.replace('./inventory.html')">Inventory</button>
+    </div>
+    <div class="sidePanel right">
+        <h1>Side panel Right</h1>
+    </div>
     <iframe frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970" height="610"></iframe>
 
 </main>

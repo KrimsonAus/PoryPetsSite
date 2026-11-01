@@ -33,7 +33,7 @@ async function hasCompletedTutorial() {
     if (!user) return false;
 
     let userId = user.id;
-    const { data, error } = await supabaseClient
+    const {data, error} = await supabaseClient
         .from('profiles')
         .select('tutorial_completed')
         .eq('id', userId)
@@ -48,7 +48,9 @@ async function hasCompletedTutorial() {
 
     if (!data) {
         console.warn("No profile found. Assuming tutorial is not completed.");
-        if(tutorialPanel==null){return false}
+        if (tutorialPanel == null) {
+            return false
+        }
         tutorialPanel.style.visibility = 'visible';
         return false;
     }
@@ -58,12 +60,16 @@ async function hasCompletedTutorial() {
         console.log('Player has completed the tutorial.');
     } else {
         console.log('Player profile found, but tutorial is NOT completed.');
-        if(tutorialPanel!=null){
+        if (tutorialPanel != null) {
             tutorialPanel.style.visibility = 'visible';
         }
     }
 
     completedTutorial = data.tutorial_completed;
+
+
+    loadInventoryGrid();
+
     return data.tutorial_completed;
 }
 
@@ -133,7 +139,7 @@ async function UpdateGoldText() {
     console.warn("updating gold text")
 
     let goldText = topPanel.contentWindow.document.getElementById('goldAmount');
-    if(!goldText){
+    if (!goldText) {
         console.warn("gold text fail")
         await waitForIframe(topPanel);
         goldText = topPanel.contentWindow.document.getElementById('goldAmount');
@@ -150,7 +156,7 @@ function waitForIframe(iframe) {
     return new Promise((resolve) => {
         iframe.addEventListener('load', () => {
             resolve();
-        }, { once: true });
+        }, {once: true});
     });
 }
 
@@ -587,7 +593,7 @@ async function SignUp() {
         return; // Stop execution
     }
 
-    if(username==null||username===""){
+    if (username == null || username === "") {
         statusMessage.style.color = "red";
         statusMessage.textContent = "Must fill in username field.";
         return; // Stop execution
@@ -619,10 +625,9 @@ async function SignUp() {
     if (error) {
         console.error('Error signing up:', error.message);
         statusMessage.style.color = "red";
-        if(error.message === "User already registered"){
+        if (error.message === "User already registered") {
             statusMessage.textContent = 'Email already used.';
-        }
-        else{
+        } else {
             statusMessage.textContent = error.message;
         }
     } else {
@@ -736,8 +741,7 @@ async function CloseTutorialPanel() {
 }
 
 
-
-async function ShowPC(){
+async function ShowPC() {
     const pc = document.getElementById('purchase-success-panel')
     pc.style.visibility = 'visible';
     pc.style.animation = 'showPanel 3s linear';
@@ -747,6 +751,115 @@ async function ShowPC(){
         pc.style.visibility = 'hidden';
         pc.style.animation = 'null';
     }, 2850);
+}
+
+
+async function loadInventoryGrid() {
+    console.log('load inventory grid');
+
+    if (!canClick) {
+        // return;
+    }
+    canClick = false;
+    const {data: {user}} = await supabaseClient.auth.getUser();
+    console.log("Current Auth UID:", user?.id);
+    try {
+        const inventoryContainer = document.querySelector('.inventoryItems');
+        const shopLoad = document.getElementById('shopLoad');
+
+        if (!inventoryContainer) {
+            console.error("inventoryItems container not found.");
+            return;
+        }
+
+        inventoryContainer.innerHTML = '';
+
+        // Null check added here to prevent TypeError crashes
+        if (shopLoad) {
+            shopLoad.style.display = 'block';
+        }
+
+        let isle = 'player_inventory';
+
+        // 1. Start the base query
+        let query = supabaseClient
+            .from(isle)
+            .select('*');
+
+        // 3. Execute the final query
+        const {data: items, error} = await query;
+
+        console.log("Error:", error);
+        console.log("Fetched items:", items);
+
+        if (error) {
+            console.error("Failed to load shop items:", error);
+            return;
+        }
+
+        if (shopLoad) {
+            shopLoad.style.display = 'none';
+        }
+
+        // Loop through the actual database items
+        for (const item of items) {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'relative shopItem';
+
+            var sprite = null;
+
+            var itm = await getItemFromId(item.item_id);
+            var category = itm.category;
+            console.log("cat is " + category)
+            console.log(itm.name)
+            let nme = itm.name.toLowerCase();
+            let url = `${spriteUrl}item_sprites/${category}/${nme}.png`;
+
+            sprite = url;
+
+            itemCard.innerHTML = `
+                <img onclick="window.parent.location.replace('./shop.html')" src='${sprite}' alt="${item.name}" onerror="this.src='noit.jpg'">
+                <div class="bottom-center">${itm.name + " [x" + item.quantity + "]"}</div>
+            `;
+
+            inventoryContainer.appendChild(itemCard);
+        }
+
+    } catch (err) {
+        // This will print the exact line and reason the script is crashing
+        console.error("Critical error in loadInventoryGrid:", err);
+    } finally {
+        canClick = true;
+    }
+}
+
+async function getItemFromId(id) {
+    let query = supabaseClient
+        .from("items")
+        .select('*')
+        .eq('item_id', id)
+        .single();
+
+    // 3. Execute the final query
+    const {data: items, error} = await query;
+    if (error) {
+        console.log("Error item from id: " + error.message)
+    }
+
+    console.log("got: " + items + " has name " + items.name)
+    return items;
+}
+
+function isValidHttpUrl(string) {
+    let url;
+
+    try {
+        url = new URL(string);
+    } catch (_) {
+        return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
 }
 
 //THANKS TO BRYCE FOR PLAYTESTING
