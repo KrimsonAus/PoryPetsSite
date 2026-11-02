@@ -371,11 +371,14 @@ async function ShowBuyPetMenu(petId) {
     const petName = document.getElementById('pet-name-input')
     const buyPetText = document.getElementById('buy-pet-what-pet');
 
+    petName.value="";
 
     buyPetText.textContent = "You are buying a " + await getPetNameById(petId);
 
     buyPetMenu.style.visibility = 'visible';
 
+    buyPetMenu.removeEventListener('click', () => {
+    })
     buyPetButton.addEventListener('click', () => TryBuyPet(pet_id, petName.value));
     cancelBuyPetButton.addEventListener('click', () => HideBuyMenu());
 }
@@ -385,7 +388,9 @@ function HideBuyMenu() {
     buyPetMenu.style.visibility = 'hidden';
 }
 
-function TryBuyPet(petId, petName) {
+let buying = false;
+
+async function TryBuyPet(petId, petName) {
     if (!(petName !== "" && petName != null)) {
         const petMenuStatus = document.getElementById('pet-menu-status')
         petMenuStatus.textContent = "Need to name pet."
@@ -393,7 +398,10 @@ function TryBuyPet(petId, petName) {
     }
 
     //alert("Buying: " + petId + " with name " + petName)
-    BuyPet(petId, petName);
+    if (!buying) {
+        buying=true;
+        await BuyPet(petId, petName);
+    }
 }
 
 async function BuyPet(petId, petName) { // <- Add petName parameter
@@ -413,6 +421,7 @@ async function BuyPet(petId, petName) { // <- Add petName parameter
         if (error.message === "duplicate key value violates unique constraint \"player_pets_pen_pkey\"") {
             petMenuStatus.textContent = "You already have a pet with that name!";
         }
+        buying=false;
         return false;
     }
 
@@ -436,6 +445,7 @@ async function BuyPet(petId, petName) { // <- Add petName parameter
         }
     }
 
+    buying=false;
     return success;
 }
 
