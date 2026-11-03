@@ -398,6 +398,7 @@ async function TryBuyPet(petId, petName) {
     }
 
     //alert("Buying: " + petId + " with name " + petName)
+    //thank you to Bryce for discovering this bug
     if (!buying) {
         buying=true;
         await BuyPet(petId, petName);
