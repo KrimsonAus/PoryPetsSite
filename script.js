@@ -951,5 +951,25 @@ async function loadPetPenGrid() {
         canClick = true;
     }
 }
+// Listen for Supabase token refreshes in the background
+supabaseClient.auth.onAuthStateChange((event, session) => {
+    // We only care if a token was refreshed or a new sign-in occurred
+    if (event === 'TOKEN_REFRESHED' || event === 'SIGNED_IN') {
+        if (session) {
+            const freshToken = session.access_token;
+            const gameIframe = document.getElementById('game');
+
+            // If Unity is loaded and ready, push the new token
+            if (gameIframe && gameIframe.contentWindow && gameIframe.contentWindow.myUnityInstance) {
+                console.log("Token refreshed! Sending new token to Unity...");
+                gameIframe.contentWindow.myUnityInstance.SendMessage(
+                    'DatabaseManager',
+                    'UpdateAuthToken',
+                    freshToken
+                );
+            }
+        }
+    }
+});
 
 //THANKS TO BRYCE FOR PLAYTESTING
