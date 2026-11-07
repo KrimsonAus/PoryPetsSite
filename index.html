@@ -13,7 +13,7 @@
 <main class="center-text ">
 
     <div class="flexMain">
-        <div style="visibility: hidden;" class="tutorialPanel" id="tutorial-panel">
+        <div style="display: none;" class="tutorialPanel" id="tutorial-panel">
             <h1>Welcome New User!</h1>
             <p>Currently, you have no <span style="color: blue">pets</span>...</p>
             <p><span style="color: blue">Pets</span> cost <span style="color: gold">gold</span>, ill give you some so
@@ -49,7 +49,7 @@
             <br>
         </div>
 
-        <div style="visibility: hidden" class="signupPanel panel" id="signup-panel">
+        <div style="display: none;" class="signupPanel panel" id="signup-panel">
             <h1>Sign Up.</h1>
             <br>
 
@@ -78,20 +78,22 @@
 
         <p class="emailLogged" id="status-message"></p>
 
-        <iframe class="game" frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets" width="970"
-                height="610"></iframe>
-    </div>
-    <div class="sidePanel left">
-        <h1>Management</h1>
-        <button onclick="window.parent.location.replace('./shop.html')">Shop</button>
-        <button>Bank</button>
-        <button onclick="window.parent.location.replace('./petpen.html')">Pet Pen</button>
-        <button onclick="window.parent.location.replace('./inventory.html')">Inventory</button>
-    </div>
-    <div class="sidePanel right">
-        <h1>Side panel Right</h1>
     </div>
 
+    <div class="layout-wrapper">
+
+        <div class="sidePanel left">
+            <h1>Management</h1>
+            <button onclick="window.parent.location.replace('./shop.html')">Shop</button>
+            <button>Bank</button>
+            <button onclick="window.parent.location.replace('./petpen.html')">Pet Pen</button>
+            <button onclick="window.parent.location.replace('./inventory.html')">Inventory</button>
+        </div>
+        <iframe class="game" frameborder="none" src="./PoryPetsGame/index.html" id="game" title="Pory Pets"></iframe>
+        <div class="sidePanel right">
+            <h1>Side panel Right</h1>
+        </div>
+    </div>
 
 </main>
 <footer></footer>

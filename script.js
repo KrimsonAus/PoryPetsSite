@@ -645,8 +645,8 @@ async function SignUp() {
         console.log('User created successfully:', data.user);
         statusMessage.style.color = "green";
         statusMessage.textContent = "Signed up successfully!";
-        signupPanel.style.visibility = 'hidden';
-        loginPanel.display = "none";
+        signupPanel.style.display = 'none';
+        loginPanel.style.display = "none";
 
         await checkExistingLogin();
         await hasCompletedTutorial()
@@ -656,7 +656,7 @@ async function SignUp() {
 
 function SignUpMenu() {
     const signupPanel = document.getElementById('signup-panel');
-    signupPanel.style.visibility = 'visible';
+    signupPanel.style.display = 'block';
 }
 
 function SetDisplayName() {
